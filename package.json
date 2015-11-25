@@ -1,0 +1,27 @@
+{
+  "name": "usm",
+  "version": "0.0.1",
+  "description": "a ui state machine for react",
+  "main": "usm.js",
+  "scripts": {
+    "test": "babel-node example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kindalu/usm.git"
+  },
+  "keywords": [
+    "state",
+    "machine",
+    "react"
+  ],
+  "author": "Wangchou Lu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kindalu/usm/issues"
+  },
+  "homepage": "https://github.com/kindalu/usm#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.1.18"
+  }
+}

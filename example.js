@@ -1,3 +1,4 @@
+import Immutable from 'immutable';
 import USM from './usm.js'
 
 console.log("start counter example");
@@ -9,12 +10,16 @@ const INCREMENT_COUNTER = "INCREMENT_COUNTER";
 const DECREMENT_COUNTER = "DECREMENT_COUNTER";
 
 //set initial value for counter state
-usm.states[COUNTER_STATE] = {val:0};
-usm.register(INCREMENT_COUNTER, COUNTER_STATE, (counter) => counter.val++);
-usm.register(DECREMENT_COUNTER, COUNTER_STATE, (counter) => counter.val--);
-usm.addWatcher(COUNTER_STATE, (counter) => {
-                console.log("  counter changed to " + counter.val);
-              });
+usm.states = usm.states.set(COUNTER_STATE, Immutable.Map({counter:0}));
+
+usm.register(INCREMENT_COUNTER, COUNTER_STATE, (m) => m.set('counter', m.get('counter')+1));
+usm.register(DECREMENT_COUNTER, COUNTER_STATE, (m) => m.set('counter', m.get('counter')-1));
+usm.addObserver(
+  COUNTER_STATE,
+  (m) => {
+    console.log("  counter changed to " + m.get('counter'));
+  }
+);
 
 usm.trigger(INCREMENT_COUNTER);
 usm.trigger(INCREMENT_COUNTER);

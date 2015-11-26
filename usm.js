@@ -43,9 +43,9 @@ class USM {
     }
   }
 
-  set(state_name, new_state){
+  set(state_name, jsObj){
     let tmp = this.states;
-    this.states = this.states.set(state_name, new_state);
+    this.states = this.states.set(state_name, Immutable.fromJS(jsObj));
     if(tmp !== this.states){
       this.notify_change(state_name);
     }

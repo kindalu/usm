@@ -12,10 +12,20 @@ class USM {
 
     // state change watches := state_name => callback
     this.observers = {};
+
   }
 
   register(action, state_name, callback){
     this.links[action] = {state_name, callback};
+  }
+
+  notify_change(state_name){
+    if(this.observers.hasOwnProperty(state_name))
+      this.observers[state_name].forEach((func) => func(this.states.get(state_name)));
+
+    // call the listener want to watch every state changes
+    if(this.observers.hasOwnProperty('*'))
+      this.observers['*'].forEach((func) => func(this.states.get(state_name)));
   }
 
   trigger(action, ...data){
@@ -29,12 +39,15 @@ class USM {
     );
 
     if(stateBefore !== this.states.get(state_name)){
-      if(this.observers.hasOwnProperty(state_name))
-        this.observers[state_name].forEach((func) => func(this.states.get(state_name)));
+      this.notify_change(state_name);
+    }
+  }
 
-      // call the listener want to watch every state changes
-      if(this.observers.hasOwnProperty('*'))
-        this.observers['*'].forEach((func) => func(this.states.get(state_name)));
+  set(state_name, new_state){
+    let tmp = this.states;
+    this.states = this.states.set(state_name, new_state);
+    if(tmp !== this.states){
+      this.notify_change(state_name);
     }
   }
 

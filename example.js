@@ -10,7 +10,7 @@ const INCREMENT_COUNTER = "INCREMENT_COUNTER";
 const DECREMENT_COUNTER = "DECREMENT_COUNTER";
 
 //set initial value for counter state
-usm.states = usm.states.set(COUNTER_STATE, Immutable.Map({counter:0}));
+usm.set(COUNTER_STATE, Immutable.Map({counter:0}));
 
 usm.register(INCREMENT_COUNTER, COUNTER_STATE, (m) => m.set('counter', m.get('counter')+1));
 usm.register(DECREMENT_COUNTER, COUNTER_STATE, (m) => m.set('counter', m.get('counter')-1));
